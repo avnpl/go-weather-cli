@@ -2,6 +2,10 @@
 
 Go CLI App to get weather forecasts
 
+# Important links
+
+API : https://docs.tomorrow.io/reference/weather-forecast
+
 # Notes
 
 Multiple Locations: Allow users to specify multiple locations and retrieve weather forecasts for each location separately. This could be useful for users who frequently travel or have interests in multiple places.
