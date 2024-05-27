@@ -39,3 +39,16 @@ type APIResValues struct {
 	WindGust                 float64 `json:"windGust"`
 	WindSpeed                float64 `json:"windSpeed"`
 }
+
+type CommonWeatherData struct {
+	CloudCover          float64 `json:"cloudCover"`
+	Humidity            float64 `json:"humidity"`
+	RainIntensity       float64 `json:"rainIntensity"`
+	SnowIntensity       float64 `json:"snowIntensity"`
+	Temperature         float64 `json:"temperature"`
+	TemperatureApparent float64 `json:"temperatureApparent"`
+	Visibility          float64 `json:"visibility"`
+	WindDirection       float64 `json:"windDirection"`
+	WindSpeed           float64 `json:"windSpeed"`
+	Location            string  `json:"name"`
+}

@@ -45,7 +45,8 @@ func main() {
 		}
 
 		// Fetch data from the API
-		weather := utils.GetRealtimeWeather(input)
-		fmt.Println(weather)
+		apiData := utils.APIClient(input)
+		// Print the commonly used Weather datapoints
+		utils.PrintCommonWeatherData(apiData)
 	}
 }
