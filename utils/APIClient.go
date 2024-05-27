@@ -7,14 +7,15 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"reflect"
 
 	"github.com/joho/godotenv"
 )
 
 /*
-Take the `location` name as the input string and return the API response object
+Take the `location` name as the input string and return the API response as a struct
 */
-func GetRealtimeWeather(location string) APIResp {
+func APIClient(location string) APIResp {
 	// Loading the Environment Variables from the .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -55,10 +56,25 @@ func GetRealtimeWeather(location string) APIResp {
 	var resData APIResp
 	err = json.Unmarshal(resBody, &resData)
 	if err != nil {
-		log.Fatalf("Error converting response body to JSON...")
+		log.Fatalf("Error converting response body to JSON struct...")
 		fmt.Println(err.Error())
 	}
 
 	// Returns the response data in JSON format
 	return resData
+}
+
+/*
+Print all the fields in the struct with its values
+*/
+func PrintAllVals(apiData APIResp) {
+	val := reflect.ValueOf(apiData.Data.Values)
+	typ := reflect.TypeOf(apiData.Data.Values)
+
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		fieldName := typ.Field(i).Name
+		fmt.Printf("%s: %v\n", fieldName, field)
+	}
+	fmt.Print(apiData.Location.Name)
 }
