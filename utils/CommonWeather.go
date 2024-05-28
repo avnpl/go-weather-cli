@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"reflect"
 )
 
 func GetCommonWeatherData(apiData APIResp) CommonWeatherData {
@@ -22,12 +21,14 @@ func GetCommonWeatherData(apiData APIResp) CommonWeatherData {
 
 func PrintCommonWeatherData(apiData APIResp) {
 	data := GetCommonWeatherData(apiData)
-	val := reflect.ValueOf(data)
-	typ := reflect.TypeOf(data)
 
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Field(i)
-		fieldName := typ.Field(i).Name
-		fmt.Printf("%s: %v\n", fieldName, field)
-	}
+	fmt.Printf("Temperature is          %.1f °C\n", data.Temperature)
+	fmt.Printf("And Feels like          %.1f °C\n", data.TemperatureApparent)
+	fmt.Printf("Cloud Cover is          %.1f %%\n", data.CloudCover)
+	fmt.Printf("Humidity is             %.1f %%\n", data.Humidity)
+	fmt.Printf("Possibility of Rain is  %.1f %%\n", data.RainIntensity)
+	fmt.Printf("Possibility of Snow is  %.1f %%\n", data.SnowIntensity)
+	fmt.Printf("Visibility is           %.1f km\n", data.Visibility)
+	fmt.Printf("Wind Direction is       %.1f degrees\n", data.WindDirection)
+	fmt.Printf("Wind Speed is           %.1f m/s\n", data.WindSpeed)
 }
