@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func GetCommonWeatherData(apiData APIResp) CommonWeatherData {
+func GetCommonWeatherData(apiData WeatherAPIResp) CommonWeatherData {
 	return CommonWeatherData{
 		CloudCover:          apiData.Data.Values.CloudCover,
 		Humidity:            apiData.Data.Values.Humidity,
@@ -19,9 +19,11 @@ func GetCommonWeatherData(apiData APIResp) CommonWeatherData {
 	}
 }
 
-func PrintCommonWeatherData(apiData APIResp) {
+func PrintCommonWeatherData(apiData WeatherAPIResp, lat, lon float64) {
 	data := GetCommonWeatherData(apiData)
 
+	fmt.Println("----------------------------------")
+	fmt.Printf("Location is at %.4f° Latitude and %.4f° Longitude\n\n", lat, lon)
 	fmt.Printf("Temperature is          %.1f °C\n", data.Temperature)
 	fmt.Printf("And Feels like          %.1f °C\n", data.TemperatureApparent)
 	fmt.Printf("Cloud Cover is          %.1f %%\n", data.CloudCover)
@@ -31,4 +33,5 @@ func PrintCommonWeatherData(apiData APIResp) {
 	fmt.Printf("Visibility is           %.1f km\n", data.Visibility)
 	fmt.Printf("Wind Direction is       %.1f degrees\n", data.WindDirection)
 	fmt.Printf("Wind Speed is           %.1f m/s\n", data.WindSpeed)
+	fmt.Println("----------------------------------")
 }

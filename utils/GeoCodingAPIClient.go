@@ -7,15 +7,15 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"reflect"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
 
 /*
-Take the `location` name as the input string and return the API response as a struct
+Take the `location` name as the input string and return the latitude and longitude as strings
 */
-func APIClient(location string) APIResp {
+func GeoCodingAPIClient(location string) (float64, float64) {
 	// Loading the Environment Variables from the .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -24,14 +24,14 @@ func APIClient(location string) APIResp {
 	}
 
 	// Getting the APIKEY from .env file
-	apiKey := os.Getenv("APIKEY")
+	apiKey := os.Getenv("GEOCODEAPIKEY")
 
 	/*
 		- Create the query URL
 		- Send a GET request
 		- Log the error, if any
 	*/
-	queryURL := fmt.Sprintf("https://api.tomorrow.io/v4/weather/realtime?location=%s&units=metric&apikey=%s", location, apiKey)
+	queryURL := fmt.Sprintf("https://us1.locationiq.com/v1/search?q=%s&format=json&key=%s", location, apiKey)
 	res, err := http.Get(queryURL)
 	if err != nil {
 		log.Fatalf("Error fetching from API...")
@@ -53,28 +53,26 @@ func APIClient(location string) APIResp {
 		- Unmarshal the byte array data into JSON and store it in the `resData` variable
 		- Throw error, if any
 	*/
-	var resData APIResp
+	var resData GeocodeAPIResp
 	err = json.Unmarshal(resBody, &resData)
 	if err != nil {
 		log.Fatalf("Error converting response body to JSON struct...")
 		fmt.Println(err.Error())
 	}
 
-	// Returns the response data in JSON format
-	return resData
-}
-
-/*
-Print all the fields in the struct with its values
-*/
-func PrintAllVals(apiData APIResp) {
-	val := reflect.ValueOf(apiData.Data.Values)
-	typ := reflect.TypeOf(apiData.Data.Values)
-
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Field(i)
-		fieldName := typ.Field(i).Name
-		fmt.Printf("%s: %v\n", fieldName, field)
+	/*
+		Convert the latitude and longitude to float values
+	*/
+	lat, err := strconv.ParseFloat(resData[0].Lat, 32)
+	if err != nil {
+		log.Fatalf("Error converting Latitude to float64...")
+		fmt.Println(err.Error())
 	}
-	fmt.Print(apiData.Location.Name)
+	lon, err := strconv.ParseFloat(resData[0].Lon, 32)
+	if err != nil {
+		log.Fatalf("Error converting Latitude to float64...")
+		fmt.Println(err.Error())
+	}
+
+	return lat, lon
 }

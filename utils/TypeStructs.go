@@ -2,22 +2,22 @@ package utils
 
 import "time"
 
-type APIResp struct {
+type WeatherAPIResp struct {
 	Data struct {
-		Time   time.Time    `json:"time"`
-		Values APIResValues `json:"values"`
+		Time   time.Time           `json:"time"`
+		Values WeatherAPIResValues `json:"values"`
 	} `json:"data"`
-	Location APIResLocation `json:"location"`
+	Location WeatherAPIResLocation `json:"location"`
 }
 
-type APIResLocation struct {
+type WeatherAPIResLocation struct {
 	Lat  float64 `json:"lat"`
 	Lon  float64 `json:"lon"`
 	Name string  `json:"name"`
 	Type string  `json:"type"`
 }
 
-type APIResValues struct {
+type WeatherAPIResValues struct {
 	CloudBase                float64 `json:"cloudBase"`
 	CloudCeiling             float64 `json:"cloudCeiling"`
 	CloudCover               float64 `json:"cloudCover"`
@@ -51,4 +51,19 @@ type CommonWeatherData struct {
 	WindDirection       float64 `json:"windDirection"`
 	WindSpeed           float64 `json:"windSpeed"`
 	Location            string  `json:"name"`
+}
+
+type GeocodeAPIResp []struct {
+	PlaceID     string   `json:"place_id"`
+	Licence     string   `json:"licence"`
+	OsmType     string   `json:"osm_type"`
+	OsmID       string   `json:"osm_id"`
+	Boundingbox []string `json:"boundingbox"`
+	Lat         string   `json:"lat"`
+	Lon         string   `json:"lon"`
+	DisplayName string   `json:"display_name"`
+	Class       string   `json:"class"`
+	Type        string   `json:"type"`
+	Importance  float64  `json:"importance"`
+	Icon        string   `json:"icon,omitempty"`
 }

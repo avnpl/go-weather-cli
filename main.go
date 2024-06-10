@@ -44,9 +44,13 @@ func main() {
 			os.Exit(0)
 		}
 
+		// Get the latitude and longitude of the place
+		lat, lon := utils.GeoCodingAPIClient(input)
+
 		// Fetch data from the API
-		apiData := utils.APIClient(input)
+		apiData := utils.WeatherAPIClient(lat, lon)
+
 		// Print the commonly used Weather datapoints
-		utils.PrintCommonWeatherData(apiData)
+		utils.PrintCommonWeatherData(apiData, lat, lon)
 	}
 }
