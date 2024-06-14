@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"go-weather-cli/utils"
 	"log"
@@ -11,6 +12,32 @@ import (
 )
 
 func main() {
+	var singleCityName string
+	var multipleCities string
+	var listAllData bool
+	flag.StringVar(&singleCityName, "c", "", "List common weather data points for specified city")
+	flag.StringVar(&multipleCities, "m", "", "List common weather data points for specified cities")
+	flag.BoolVar(&listAllData, "a", false, "List all data points")
+	flag.Parse()
+
+	if len(os.Args) == 1 {
+		DefaultAction()
+	} else if multipleCities != "" {
+		fmt.Println(multipleCities)
+		fmt.Println(listAllData)
+	} else if singleCityName != "" {
+		// Get the latitude and longitude of the place
+		lat, lon := utils.GeoCodingAPIClient(singleCityName)
+
+		// Fetch data from the API
+		apiData := utils.WeatherAPIClient(lat, lon)
+
+		// Print the commonly used Weather datapoints and the co-ordinates
+		utils.PrintCommonWeatherData(apiData, lat, lon)
+	}
+}
+
+func DefaultAction() {
 	// Create a buffered reader to read the input from the user
 	reader := bufio.NewReader(os.Stdin)
 
