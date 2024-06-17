@@ -16,7 +16,7 @@ import (
 /*
 Take the `location` name as the input string and return the API response as a struct
 */
-func WeatherAPIClient(lat, lon float64) WeatherAPIResp {
+func WeatherAPIClient(location string) WeatherAPIResp {
 	// Loading the Environment Variables from the .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -27,11 +27,14 @@ func WeatherAPIClient(lat, lon float64) WeatherAPIResp {
 	// Getting the APIKEY from .env file
 	apiKey := os.Getenv("WEATHERAPIKEY")
 
+	// Get the co-ordinates of the location
+	lat, lon := GeoCodingAPIClient(location)
+
 	/*
 		- Convert latitude and longitude to string to be used in the URL
 		- PathEscape the string so that it can be included in the URL
 	*/
-	location := fmt.Sprintf("%f,%f", lat, lon)
+	location = fmt.Sprintf("%f,%f", lat, lon)
 	location = url.PathEscape(location)
 
 	/*
