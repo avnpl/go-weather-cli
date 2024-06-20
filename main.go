@@ -37,13 +37,13 @@ func main() {
 
 	// Split the string using spaces to get slice containing city names
 	sliceOfCities := strings.Split(multipleCities, " ")
-	fmt.Println(sliceOfCities)
 
 	// If `-a` is passed, list all data of given cities or print common data points
 	if listAllData {
 		fmt.Println("Listing all data of given cities")
 	} else {
-		fmt.Println("Listing common data of given cities")
+		data := utils.GetDataForCities(sliceOfCities)
+		utils.PrintCommonWeatherDataMultipleCities(sliceOfCities, data)
 	}
 }
 

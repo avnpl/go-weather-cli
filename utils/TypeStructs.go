@@ -50,7 +50,6 @@ type CommonWeatherData struct {
 	Visibility          float64 `json:"visibility"`
 	WindDirection       float64 `json:"windDirection"`
 	WindSpeed           float64 `json:"windSpeed"`
-	Location            string  `json:"name"`
 }
 
 type GeocodeAPIResp []struct {

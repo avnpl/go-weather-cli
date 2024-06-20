@@ -17,7 +17,6 @@ func GetCommonWeatherData(location string) CommonWeatherData {
 		Visibility:          apiData.Data.Values.Visibility,
 		WindDirection:       apiData.Data.Values.WindDirection,
 		WindSpeed:           apiData.Data.Values.WindSpeed,
-		Location:            apiData.Location.Name,
 	}
 }
 
