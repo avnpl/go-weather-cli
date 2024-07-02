@@ -4,16 +4,38 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"sync"
 )
 
 func GetDataForCities(cities []string) []CommonWeatherData {
-	data := make([]CommonWeatherData, len(cities))
+	var wg sync.WaitGroup
+	WeatherData := make([]CommonWeatherData, 0, len(cities))
+	// Create a channel which can store the data of the cities
+	dataChannel := make(chan CommonWeatherData, len(cities))
 
+	// Create a series of GoRoutines for each city and push them into the channel
 	for i := 0; i < len(cities); i++ {
-		data[i] = GetCommonWeatherData(cities[i])
+		wg.Add(1)
+		go func(city string) {
+			defer wg.Done()
+			data := GetCommonWeatherData(city)
+			dataChannel <- data
+		}(cities[i])
 	}
 
-	return data
+	// Wait for all GoRoutines to finish
+	go func() {
+		wg.Wait()
+		close(dataChannel)
+	}()
+
+	// Get the data from the channel and append it into the slice
+	for data := range dataChannel {
+		WeatherData = append(WeatherData, data)
+	}
+
+	// Return the slice
+	return WeatherData
 }
 
 func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherData) {
