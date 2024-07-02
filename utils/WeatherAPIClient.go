@@ -67,7 +67,7 @@ func WeatherAPIClient(location string) WeatherAPIResp {
 	var resData WeatherAPIResp
 	err = json.Unmarshal(resBody, &resData)
 	if err != nil {
-		log.Fatalf("Error converting response body to JSON struct...")
+		log.Fatalf("Error converting Weather API response body to JSON struct...")
 		fmt.Println(err.Error())
 	}
 

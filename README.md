@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Go Weather CLI is a command-line interface application written in Go that fetches and displays weather data for specified cities using external APIs. It provides both interactive and non-interactive modes for fetching weather data.
+The Go Weather CLI is an application written in Go that fetches and displays weather data for specified cities using external APIs. It provides both interactive and non-interactive modes for fetching weather data.
 
 ## Features
 
@@ -24,6 +24,8 @@ go run main.go
 - Enter the city name to fetch weather data.
 - Type 'x' to exit the interactive mode.
 
+![Interactive Mode Example](docs/interactice-mode-example.png)
+
 ### Non-Interactive Mode
 
 Use command-line flags to fetch weather data for one or more cities.
@@ -34,13 +36,19 @@ Use command-line flags to fetch weather data for one or more cities.
 go run main.go Mumbai
 ```
 
+![Common Weather Data for Single City](docs/common-weather-data-single-city.png)
+
 #### Fetch Common Weather Data for Multiple Cities
 
 ```sh
-go run main.go -m "Mumbai Beijing Chicago"
+go run main.go -m "Mumbai Bangalore California"
 ```
 
+![Common Data for Multiple Cities](docs/common-data-multiple-cities.png)
+
 #### List all data points for a Single City
+
+> ( Not yet implemented )
 
 ```sh
 go run main.go -a Mumbai
@@ -48,7 +56,7 @@ go run main.go -a Mumbai
 
 #### List all data points for a Multiple Cities
 
-( Not yet implemented )
+> ( Not yet implemented )
 
 ```sh
 go run main.go -a -m "Mumbai Beijing Chicago"
@@ -56,17 +64,19 @@ go run main.go -a -m "Mumbai Beijing Chicago"
 
 ### Compiling the Application
 
-The app can be compiled into an executable using:
+The app can be compiled into an executable using :
 
 ```sh
 go build -o gwe.exe main.go
 ```
 
-Then, you can use the gwe command to run the application:
+Then, you can use the gwe command to run the application :
 
 ```sh
 gwe -m "Mumbai Beijing Chicago"
 ```
+
+![List data for multiple cities](docs/list-data-multiple-cities-compiled.png)
 
 ## How it works
 
@@ -76,7 +86,7 @@ gwe -m "Mumbai Beijing Chicago"
 
    - Parses command-line arguments
    - Determines the mode of operation (interactive or non-interactive)
-   - Calls the appropriate functions in utils package to fetch and display weather data
+   - Calls the appropriate functions from the `utils` package to fetch and display weather data
 
 2. GeoCodingAPIClient.go
 
@@ -88,7 +98,7 @@ gwe -m "Mumbai Beijing Chicago"
 
 4. CommonWeather.go
 
-- Extracts common weather data points from the API response and prints them
+   - Extracts common weather data points from the API response and prints them
 
 5. MultipleCities.go
    - Fetches weather data for multiple cities concurrently using goroutines and channels

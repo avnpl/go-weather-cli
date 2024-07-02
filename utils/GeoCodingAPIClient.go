@@ -56,7 +56,8 @@ func GeoCodingAPIClient(location string) (float64, float64) {
 	var resData GeocodeAPIResp
 	err = json.Unmarshal(resBody, &resData)
 	if err != nil {
-		log.Fatalf("Error converting response body to JSON struct...")
+		log.Fatalf("Error converting GeoCoding response body to JSON struct...")
+		fmt.Println(resBody)
 		fmt.Println(err.Error())
 	}
 
