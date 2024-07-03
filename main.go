@@ -24,14 +24,16 @@ func main() {
 	}
 
 	// If only one argument is passed, print the common weather data
-	if len(os.Args) == 2 {
+	if len(os.Args) == 2 && !listAllData && multipleCities == "" {
 		utils.PrintCommonWeatherData(os.Args[1])
 		os.Exit(0)
 	}
 
 	// If 2 arguments are passed with one being `-a` then list all weather data of given city
 	if len(os.Args) == 3 && listAllData {
-		fmt.Println("List all data of given city")
+		input := strings.TrimSpace(os.Args[2])
+		input = url.PathEscape(input)
+		utils.PrintAllVals(utils.WeatherAPIClient(input))
 		os.Exit(0)
 	}
 
@@ -40,9 +42,10 @@ func main() {
 
 	// If `-a` is passed, list all data of given cities or print common data points
 	if listAllData {
-		fmt.Println("Listing all data of given cities")
+		data := utils.GetAllDataForCities(sliceOfCities)
+		utils.PrintAllDataMultipleCities(sliceOfCities, data)
 	} else {
-		data := utils.GetDataForCities(sliceOfCities)
+		data := utils.GetCommonDataForCities(sliceOfCities)
 		utils.PrintCommonWeatherDataMultipleCities(sliceOfCities, data)
 	}
 }

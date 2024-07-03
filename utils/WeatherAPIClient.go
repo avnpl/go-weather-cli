@@ -89,3 +89,8 @@ func PrintAllVals(apiData WeatherAPIResp) {
 	}
 	fmt.Print(apiData.Location.Name)
 }
+
+func GetAllWeatherData(location string) WeatherAPIResValues {
+	apiData := WeatherAPIClient(location)
+	return apiData.Data.Values
+}
