@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-func GetCommonWeatherData(location string) CommonWeatherData {
-	apiData := WeatherAPIClient(location)
+func FetchCommonWeatherDetails(location string) CommonWeatherData {
+	apiData := FetchWeatherData(location)
 
 	return CommonWeatherData{
 		CloudCover:          apiData.Data.Values.CloudCover,
@@ -20,8 +20,8 @@ func GetCommonWeatherData(location string) CommonWeatherData {
 	}
 }
 
-func PrintCommonWeatherData(location string) {
-	data := GetCommonWeatherData(location)
+func PrintCommonWeatherDetails(location string) {
+	data := FetchCommonWeatherDetails(location)
 
 	fmt.Println("----------------------------------")
 	fmt.Printf("Temperature is          %.1f °C\n", data.Temperature)

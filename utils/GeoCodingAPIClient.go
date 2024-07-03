@@ -15,7 +15,7 @@ import (
 /*
 Take the `location` name as the input string and return the latitude and longitude as strings
 */
-func GeoCodingAPIClient(location string) (float64, float64) {
+func FetchCoOrdinates(location string) (float64, float64) {
 	// Loading the Environment Variables from the .env file
 	err := godotenv.Load()
 	if err != nil {

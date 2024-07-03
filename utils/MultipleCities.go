@@ -7,7 +7,7 @@ import (
 	"sync"
 )
 
-func GetCommonDataForCities(cities []string) []CommonWeatherData {
+func FetchCommonDataForCities(cities []string) []CommonWeatherData {
 	var wg sync.WaitGroup
 	WeatherData := make([]CommonWeatherData, 0, len(cities))
 	// Create a channel which can store the data of the cities
@@ -18,7 +18,7 @@ func GetCommonDataForCities(cities []string) []CommonWeatherData {
 		wg.Add(1)
 		go func(city string) {
 			defer wg.Done()
-			data := GetCommonWeatherData(city)
+			data := FetchCommonWeatherDetails(city)
 			dataChannel <- data
 		}(cities[i])
 	}
@@ -38,7 +38,7 @@ func GetCommonDataForCities(cities []string) []CommonWeatherData {
 	return WeatherData
 }
 
-func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherData) {
+func PrintCommonWeatherDataCities(cities []string, data []CommonWeatherData) {
 	typ := reflect.TypeOf(data[0])
 	numOfFields := typ.NumField()
 	numOfCities := len(cities)
@@ -111,7 +111,7 @@ func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherD
 	fmt.Println()
 }
 
-func GetAllDataForCities(cities []string) []WeatherAPIResValues {
+func FetchAllDataForCities(cities []string) []WeatherAPIResValues {
 	var wg sync.WaitGroup
 	WeatherData := make([]WeatherAPIResValues, 0, len(cities))
 	// Create a channel which can store the data of the cities
@@ -122,7 +122,7 @@ func GetAllDataForCities(cities []string) []WeatherAPIResValues {
 		wg.Add(1)
 		go func(city string) {
 			defer wg.Done()
-			data := GetAllWeatherData(city)
+			data := FetchAllWeatherDetails(city)
 			dataChannel <- data
 		}(cities[i])
 	}
@@ -142,7 +142,7 @@ func GetAllDataForCities(cities []string) []WeatherAPIResValues {
 	return WeatherData
 }
 
-func PrintAllDataMultipleCities(cities []string, data []WeatherAPIResValues) {
+func PrintAllWeatherDataForCities(cities []string, data []WeatherAPIResValues) {
 	typ := reflect.TypeOf(data[0])
 	numOfFields := typ.NumField()
 	numOfCities := len(cities)

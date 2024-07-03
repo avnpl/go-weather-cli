@@ -16,7 +16,7 @@ import (
 /*
 Take the `location` name as the input string and return the API response as a struct
 */
-func WeatherAPIClient(location string) WeatherAPIResp {
+func FetchWeatherData(location string) WeatherAPIResp {
 	// Loading the Environment Variables from the .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -28,7 +28,7 @@ func WeatherAPIClient(location string) WeatherAPIResp {
 	apiKey := os.Getenv("WEATHERAPIKEY")
 
 	// Get the co-ordinates of the location
-	lat, lon := GeoCodingAPIClient(location)
+	lat, lon := FetchCoOrdinates(location)
 
 	/*
 		- Convert latitude and longitude to string to be used in the URL
@@ -78,7 +78,7 @@ func WeatherAPIClient(location string) WeatherAPIResp {
 /*
 Print all the fields in the struct with its values
 */
-func PrintAllVals(apiData WeatherAPIResp) {
+func PrintAllWeatherDetails(apiData WeatherAPIResp) {
 	val := reflect.ValueOf(apiData.Data.Values)
 	typ := reflect.TypeOf(apiData.Data.Values)
 
@@ -90,7 +90,7 @@ func PrintAllVals(apiData WeatherAPIResp) {
 	fmt.Print(apiData.Location.Name)
 }
 
-func GetAllWeatherData(location string) WeatherAPIResValues {
-	apiData := WeatherAPIClient(location)
+func FetchAllWeatherDetails(location string) WeatherAPIResValues {
+	apiData := FetchWeatherData(location)
 	return apiData.Data.Values
 }
