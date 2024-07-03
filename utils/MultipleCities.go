@@ -42,6 +42,7 @@ func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherD
 	typ := reflect.TypeOf(data[0])
 	numOfFields := typ.NumField()
 	numOfCities := len(cities)
+	commonDataUnits := [...]string{"%", "%", "%", "%", "°C", "°C", "km", "°", "m/s"}
 
 	// Make a slice containing the field names
 	fieldNames := make([]string, numOfFields)
@@ -77,7 +78,7 @@ func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherD
 			totalHeaderLen += len(city) + 2
 		}
 	}
-	totalHeaderLen += numOfCities + 3
+	totalHeaderLen += numOfCities + 3 + 4
 	fmt.Println(strings.Repeat("-", totalHeaderLen))
 
 	// Print fields in each cities one by one
@@ -103,6 +104,8 @@ func PrintCommonWeatherDataMultipleCities(cities []string, data []CommonWeatherD
 			fmt.Print(strings.Repeat(" ", columnWidth-initialSpace-len(valString)))
 			fmt.Print("|")
 		}
+		fmt.Print(" ")
+		fmt.Print(commonDataUnits[i])
 		fmt.Println()
 	}
 	fmt.Println()

@@ -31,7 +31,7 @@ func PrintCommonWeatherData(location string) {
 	fmt.Printf("Possibility of Rain is  %.1f %%\n", data.RainIntensity)
 	fmt.Printf("Possibility of Snow is  %.1f %%\n", data.SnowIntensity)
 	fmt.Printf("Visibility is           %.1f km\n", data.Visibility)
-	fmt.Printf("Wind Direction is       %.1f degrees\n", data.WindDirection)
+	fmt.Printf("Wind Direction is       %.1f °\n", data.WindDirection)
 	fmt.Printf("Wind Speed is           %.1f m/s\n", data.WindSpeed)
 	fmt.Println("----------------------------------")
 }
