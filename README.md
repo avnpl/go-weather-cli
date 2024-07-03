@@ -48,19 +48,19 @@ go run main.go -m "Mumbai Bangalore California"
 
 #### List all data points for a Single City
 
-> ( Not yet implemented )
-
 ```sh
 go run main.go -a Mumbai
 ```
 
-#### List all data points for a Multiple Cities
+![All Data Points for single city](docs/all-data-for-single-city.png)
 
-> ( Not yet implemented )
+#### List all data points for a Multiple Cities
 
 ```sh
 go run main.go -a -m "Mumbai Beijing Chicago"
 ```
+
+![All Data Points for Multiple Cities](docs/all-data-multiple-cities.png)
 
 ### Compiling the Application
 
