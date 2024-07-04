@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"reflect"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -81,13 +82,27 @@ Print all the fields in the struct with its values
 func PrintAllWeatherDetails(apiData WeatherAPIResp) {
 	val := reflect.ValueOf(apiData.Data.Values)
 	typ := reflect.TypeOf(apiData.Data.Values)
+	numOfFields := typ.NumField()
 
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Field(i)
-		fieldName := typ.Field(i).Name
-		fmt.Printf("%s: %v\n", fieldName, field)
+	// Find the maximum length of a field name
+	var maxlen int
+	for i := 0; i < numOfFields; i++ {
+		fieldLen := len(typ.Field(i).Name)
+		if fieldLen > maxlen {
+			maxlen = fieldLen
+		}
 	}
-	fmt.Print(apiData.Location.Name)
+	maxlen += 2
+
+	fmt.Println()
+	for i := 0; i < numOfFields; i++ {
+		fieldVal := val.Field(i).Interface()
+		fieldName := typ.Field(i).Name
+		fmt.Printf("%s", fieldName)
+		fmt.Print(strings.Repeat(" ", maxlen-len(fieldName)))
+		fmt.Printf(": %v", fieldVal)
+		fmt.Println()
+	}
 }
 
 func FetchAllWeatherDetails(location string) WeatherAPIResValues {
