@@ -24,7 +24,7 @@ go run main.go
 - Enter the city name to fetch weather data.
 - Type 'x' to exit the interactive mode.
 
-![Interactive Mode Example](docs/interactice-mode-example.png)
+![Interactive Mode Example](docs/interactive-mode-example.png)
 
 ### Non-Interactive Mode
 
@@ -108,3 +108,9 @@ gwe -m "Mumbai Beijing Chicago"
 
 - Weather API : [Tomorrow.io Weather API Documentation](https://docs.tomorrow.io/reference/weather-forecast)
 - GeoCoding API : [LocationIQ Geocoding API Documentation](https://docs.locationiq.com/reference/search)
+
+### Known Issues
+
+**Error converting GeoCoding response body to JSON struct...**
+
+- The APIs may fail every once in a while. It is suggested to use some other API which has low occurrences of failure
