@@ -52,7 +52,7 @@ type CommonWeatherData struct {
 	WindSpeed           float64 `json:"windSpeed"`
 }
 
-type GeocodeAPIResp []struct {
+type GeocodeAPIResp struct {
 	PlaceID     string   `json:"place_id"`
 	Licence     string   `json:"licence"`
 	OsmType     string   `json:"osm_type"`

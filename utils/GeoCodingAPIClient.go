@@ -49,31 +49,44 @@ func FetchCoOrdinates(location string) (float64, float64) {
 	defer res.Body.Close()
 
 	/*
-		- Create a variable to hold the JSON data using the type struct
-		- Unmarshal the byte array data into JSON and store it in the `resData` variable
-		- Throw error, if any
+		Handles JSON response as it can be either a single object or an array of objects since there can be multiple locations around the world which share the same name, in which case, the API returns an array of location data. The first one is assumed to be correct and used in this case
+
+		- Initialize a variable of type `GeocodeAPIResp` to hold the JSON data
+		- Attempt to unmarshal `resBody` into `resData`.
+		- If the first unmarshal attempt fails, declare a slice `resDataArr` of `GeocodeAPIResp`.
+		- Try to unmarshal `resBody` into `resDataArr`.
+		- If both unmarshal attempts fail, log a fatal error, print the response body and error message.
+		- If unmarshaling into `resDataArr` is successful, set `resData` to the first element of `resDataArr`.
 	*/
+
 	var resData GeocodeAPIResp
 	err = json.Unmarshal(resBody, &resData)
 	if err != nil {
-		log.Fatalf("Error converting GeoCoding response body to JSON struct...")
-		fmt.Println("Response Body:", string(resBody))
-		fmt.Println("Error:", err)
-		fmt.Println("Error Message:", err.Error())
+		var resDataArr []GeocodeAPIResp
+		newErr := json.Unmarshal(resBody, &resDataArr)
+		if newErr != nil {
+			log.Fatalf("Error converting GeoCoding response body to JSON struct...")
+			fmt.Print(string(resBody))
+			fmt.Println("Error Message:", err.Error())
+		}
+		resData = resDataArr[0]
 	}
 
 	/*
 		Convert the latitude and longitude to float values
 	*/
-	lat, err := strconv.ParseFloat(resData[0].Lat, 32)
+	lat, err := strconv.ParseFloat(resData.Lat, 32)
 	if err != nil {
-		log.Fatalf("Error converting Latitude to float64...")
-		fmt.Println(err.Error())
+		fmt.Println(string(resBody))
+		fmt.Println(resData.Lat)
+		fmt.Println(location, err)
+		log.Fatalf("Error converting Latitude to float64")
 	}
-	lon, err := strconv.ParseFloat(resData[0].Lon, 32)
+	lon, err := strconv.ParseFloat(resData.Lon, 64)
 	if err != nil {
-		log.Fatalf("Error converting Latitude to float64...")
-		fmt.Println(err.Error())
+		log.Fatalf("Error converting Longitude to float64...")
+		fmt.Println(resData.Lon)
+		fmt.Println(location, err)
 	}
 
 	return lat, lon

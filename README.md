@@ -41,7 +41,7 @@ go run main.go Mumbai
 #### Fetch Common Weather Data for Multiple Cities
 
 ```sh
-go run main.go -m "Mumbai Bangalore California"
+go run main.go -m "Mumbai Beijing Chicago"
 ```
 
 ![Common Data for Multiple Cities](docs/common-data-multiple-cities.png)
